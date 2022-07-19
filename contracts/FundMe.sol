@@ -42,6 +42,14 @@ contract FundMe {
 
   //Que pasa si alguien manda ETH a este contrato sin acceder a la función fund
 
+  receive() external payable {
+    fund();
+  }
+
+  fallback() external payable {
+    fund();
+  }
+
   constructor(address priceFeedAddress) {
     i_owner = msg.sender; //Con esto inicializamos owner con la dirección que despliegue el contrato
     s_priceFeed = AggregatorV3Interface(priceFeedAddress);
