@@ -68,12 +68,14 @@ contract FundMe {
 
   function withdraw() public onlyOwner {
     //Vamos direccion por direccion y ponemos que cada una ha donado 0
-    for (uint256 funderIndex = 0; funderIndex < s_funders.length; funderIndex++) {
-      address funder = s_funders[funderIndex];
+    //convertimos s_founders a memoria para ahorrar gas
+    address[] memory funders = s_funders;
+    for (uint256 funderIndex = 0; funderIndex < funders.length; funderIndex++) {
+      address funder = funders[funderIndex];
       s_Address2donacion[funder] = 0;
     }
     //Reseteamos el vector que contenía todas las direcciones donadoras
-    s_funders = new address[](0);
+    funders = new address[](0);
 
     //Retiramos los fondos del contrato
     //Transfer
